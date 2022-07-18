@@ -105,7 +105,7 @@ registerBlockType('talia/custom-cta', {
   //custom functions
   //built-in functions
   edit() {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Hello World");
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Call to Action");
   },
 
   save() {}
