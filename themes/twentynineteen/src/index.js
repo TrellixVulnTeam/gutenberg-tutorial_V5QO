@@ -8,15 +8,25 @@ registerBlockType('talia/custom-cta', {
     category: 'design',
 
     //custom attributes
-    attributes: {},
-
-    //custom functions
+    attributes: {
+        author: {
+            type: 'string'
+        }
+    },
 
 
     //built-in functions
-    edit(){
-        return <div>Call to Action</div>;
+    edit({ attributes, setAttributes }){
+
+        //custom functions
+        function updateAuthor(event) {
+            setAttributes( { author: event.target.value } );
+        }
+
+        return <input value={ attributes.author } onChange={ updateAuthor } type="text"/>;
     },
 
-    save(){}
+    save({attributes}){
+        return <p>Author name: <i>{attributes.author}</i></p>
+    }
 })

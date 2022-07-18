@@ -100,15 +100,39 @@ registerBlockType('talia/custom-cta', {
   icon: 'format-image',
   category: 'design',
   //custom attributes
-  attributes: {},
-
-  //custom functions
-  //built-in functions
-  edit() {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Call to Action");
+  attributes: {
+    author: {
+      type: 'string'
+    }
   },
 
-  save() {}
+  //built-in functions
+  edit(_ref) {
+    let {
+      attributes,
+      setAttributes
+    } = _ref;
+
+    //custom functions
+    function updateAuthor(event) {
+      setAttributes({
+        author: event.target.value
+      });
+    }
+
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      value: attributes.author,
+      onChange: updateAuthor,
+      type: "text"
+    });
+  },
+
+  save(_ref2) {
+    let {
+      attributes
+    } = _ref2;
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Author name: ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", null, attributes.author));
+  }
 
 });
 })();
