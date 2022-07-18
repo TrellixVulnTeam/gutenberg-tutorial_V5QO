@@ -44,3 +44,14 @@
  }
 
  add_action('init', 'talia_gutenberg_default_colors');
+
+ function talia_gutenberg_blocks()
+ {
+    wp_register_script('custom-cta-js', get_template_directory_uri() . '/js/gutenberg-cta-block.js', array('wp-blocks'));
+    
+    register_block_type('talia/custom-cta', array(
+        'editor_script' => 'custom-cta-js'
+    ));
+ }
+
+ add_action('init', 'talia_gutenberg_blocks');
