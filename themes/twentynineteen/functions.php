@@ -375,3 +375,8 @@ require get_template_directory() . '/inc/customizer.php';
  * Block Patterns.
  */
 require get_template_directory() . '/inc/block-patterns.php';
+
+/**
+ * Gutenberg custom blocks.
+ */
+require get_template_directory() . '/inc/gutenberg.php';
