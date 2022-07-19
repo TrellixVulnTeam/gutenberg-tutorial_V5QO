@@ -1,17 +1,22 @@
 const {
     registerBlockType
 } = wp.blocks;
+
 const {
     RichText,
     InspectorControls,
     ColorPalette,
-    MediaUpload
+    MediaUpload,
+    InnerBlocks
 } = wp.editor;
+
 const {
     PanelBody,
     IconButton,
     RangeControl
 } = wp.components;
+
+const ALLOWED_BLOCKS = ['core/button'];
 
 registerBlockType('talia/custom-cta', {
     //built-in attributes
@@ -157,7 +162,7 @@ registerBlockType('talia/custom-cta', {
                         value={body}
                         onChange={onChangeBody}
                         style={{ color: bodyColor }} />
-                
+                    <InnerBlocks allowedBlocks={ALLOWED_BLOCKS}/>
             </div>
         ]);
     },
@@ -187,6 +192,7 @@ registerBlockType('talia/custom-cta', {
                     <RichText.Content tagName="p"
                         value={body}
                         style={{ color: bodyColor }} />
+                    <InnerBlocks.Content/>
                 
             </div>
         );
