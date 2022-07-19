@@ -7,7 +7,9 @@ const {
     InspectorControls,
     ColorPalette,
     MediaUpload,
-    InnerBlocks
+    InnerBlocks,
+    BlockControls,
+    AlignmentToolbar
 } = wp.editor;
 
 const {
@@ -56,6 +58,10 @@ registerBlockType('talia/custom-cta', {
         overlayOpacity: {
             type: 'number',
             default: 0.3
+        },
+        alignment: {
+            type: 'string',
+            default: null
         }
     },
 
@@ -66,6 +72,7 @@ registerBlockType('talia/custom-cta', {
         const {
             title,
             body,
+            alignment,
             titleColor,
             bodyColor,
             background,
@@ -100,6 +107,10 @@ registerBlockType('talia/custom-cta', {
 
         function onOverlayOpacityChange(newOpacity) {
             setAttributes({ overlayOpacity: newOpacity });
+        }
+
+        function onChangeAlignment(newAlignment) {
+            setAttributes({ alignment: newAlignment });
         }
 
         return ([
@@ -150,18 +161,26 @@ registerBlockType('talia/custom-cta', {
                 <div className="cta-overlay" style={{
                     background: overlayColor, opacity: overlayOpacity
                 }}></div>
+                {
+                    <BlockControls>
+                        <AlignmentToolbar value={ alignment }
+                                          onChange={ onChangeAlignment }/>
+                    </BlockControls>
+                }
                     <RichText key="editable"
                         tagName="h2"
                         placeholder="Enter Title"
                         value={title}
                         onChange={onChangeTitle}
-                        style={{ color: titleColor }} />
+                        style={{ color: titleColor,
+                        textAlign: alignment}} />
                     <RichText key="editable"
                         tagName="p"
                         placeholder="Enter Description"
                         value={body}
                         onChange={onChangeBody}
-                        style={{ color: bodyColor }} />
+                        style={{ color: bodyColor,
+                            textAlign: alignment}} />
                     <InnerBlocks allowedBlocks={ALLOWED_BLOCKS}/>
             </div>
         ]);
@@ -171,6 +190,7 @@ registerBlockType('talia/custom-cta', {
         const {
             title,
             body,
+            alignment,
             titleColor,
             bodyColor,
             background,
@@ -188,10 +208,10 @@ registerBlockType('talia/custom-cta', {
                 <div className="cta-overlay" style={{
                     background: overlayColor, opacity: overlayOpacity
                 }}></div>
-                    <h2 style={{ color: titleColor }}>{title}</h2>
+                    <h2 style={{ color: titleColor, textAlign: alignment }}>{title}</h2>
                     <RichText.Content tagName="p"
                         value={body}
-                        style={{ color: bodyColor }} />
+                        style={{ color: bodyColor, textAlign: alignment }} />
                     <InnerBlocks.Content/>
                 
             </div>
