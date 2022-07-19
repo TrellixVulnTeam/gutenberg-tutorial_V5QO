@@ -1,4 +1,5 @@
 const { registerBlockType } = wp.blocks;
+const { RichText } = wp.editor;
 
 registerBlockType('talia/custom-cta', {
     //built-in attributes
@@ -9,8 +10,15 @@ registerBlockType('talia/custom-cta', {
 
     //custom attributes
     attributes: {
-        author: {
-            type: 'string'
+        title: {
+            type: 'string',
+            source: 'html',
+            selector: 'h2'
+        },
+        body: {
+            type: 'string',
+            source: 'html',
+            selector: 'p'
         }
     },
 
@@ -18,15 +26,48 @@ registerBlockType('talia/custom-cta', {
     //built-in functions
     edit({ attributes, setAttributes }){
 
+        const {
+            title, 
+            body
+        } = attributes;
+
         //custom functions
-        function updateAuthor(event) {
-            setAttributes( { author: event.target.value } );
+        function onChangeTitle(newTitle) {
+            setAttributes( { title: newTitle } );
         }
 
-        return <input value={ attributes.author } onChange={ updateAuthor } type="text"/>;
+        function onChangeBody(newBody) {
+            setAttributes( { body: newBody } );
+        }
+
+        return ([
+            <div class="cta-container">
+                <RichText key="editable"
+                          tagName="h2"
+                          placeholder="Enter Title"
+                          value={ title }
+                          onChange={ onChangeTitle }/>
+                <RichText key="editable"
+                          tagName="p"
+                          placeholder="Enter Description"
+                          value={ body }
+                          onChange={ onChangeBody }/>
+            </div>
+        ]);
     },
 
     save({attributes}){
-        return <p>Author name: <i>{attributes.author}</i></p>
+        const {
+            title, 
+            body
+        } = attributes;
+        
+        return (
+            <div class="cta-container">
+                <h2>{ title }</h2>
+                <RichText.Content tagName="p"
+                                  value={ body }/>
+            </div>
+        );
     }
 })

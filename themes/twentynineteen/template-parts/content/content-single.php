@@ -20,7 +20,7 @@
 
 	<div class="entry-content">
 		<?php
-		echo get_the_content();
+		
 		the_content(
 			sprintf(
 				wp_kses(
