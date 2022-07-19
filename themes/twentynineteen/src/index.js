@@ -4,10 +4,12 @@ const {
 const { 
     RichText, 
     InspectorControls, 
-    ColorPalette 
+    ColorPalette,
+    MediaUpload
 } = wp.editor;
 const {
-    PanelBody
+    PanelBody,
+    IconButton
 } = wp.components;
 
 registerBlockType('talia/custom-cta', {
@@ -36,6 +38,10 @@ registerBlockType('talia/custom-cta', {
             type: 'string',
             source: 'html',
             selector: 'p'
+        },
+        background: {
+            type: 'string',
+            default: 'null'
         }
     },
 
@@ -47,7 +53,8 @@ registerBlockType('talia/custom-cta', {
             title, 
             body,
             titleColor,
-            bodyColor
+            bodyColor,
+            background
         } = attributes;
 
         //custom functions
@@ -67,20 +74,42 @@ registerBlockType('talia/custom-cta', {
             setAttributes( { bodyColor: newBodyColor } );
         }
 
+        function onSelectImage(newImage) {
+            setAttributes( { background: newImage.sizes.full.url } );
+        }
+
         return ([
             <InspectorControls style={ { marginBottom: '40px' } }>
-                <PanelBody title={'Title Color'}>
+                <PanelBody title={'Font Colors'}>
                     <p><strong>Select Title Color</strong></p>
                     <ColorPalette value={titleColor}
                                   onChange={ onTitleColorChange } />
-                </PanelBody>,
-                <PanelBody title={'Body Color'}>
                     <p><strong>Select Body Color</strong></p>
                     <ColorPalette value={bodyColor}
                                   onChange={ onBodyColorChange } />
                 </PanelBody>
+                <PanelBody title={'Background Image'}>
+                    <p><strong>Select Background Image:</strong></p>
+                    <MediaUpload
+                        onSelect={ onSelectImage }
+                        type="image"
+                        value={ background }
+                        render={ ( { open } ) => {
+                            return (<IconButton
+                                onClick={ open }
+                                icon="upload"
+                                className="editor-media-placeholder__button is-button is-default is-large">
+                                Upload Background Image
+                            </IconButton>);
+                        }}/>
+                </PanelBody>
             </InspectorControls>,
-            <div class="cta-container">
+            <div class="cta-container" style={{
+                backgroundImage: `url('${background}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}>
                 <RichText key="editable"
                           tagName="h2"
                           placeholder="Enter Title"
@@ -102,11 +131,17 @@ registerBlockType('talia/custom-cta', {
             title, 
             body,
             titleColor,
-            bodyColor
+            bodyColor,
+            background
         } = attributes;
         
         return (
-            <div class="cta-container">
+            <div class="cta-container" style={{
+                backgroundImage: `url('${background}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}>
                 <h2 style= { { color:titleColor } }>{ title }</h2>
                 <RichText.Content tagName="p"
                                   value={ body }

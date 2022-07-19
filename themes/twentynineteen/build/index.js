@@ -96,10 +96,12 @@ const {
 const {
   RichText,
   InspectorControls,
-  ColorPalette
+  ColorPalette,
+  MediaUpload
 } = wp.editor;
 const {
-  PanelBody
+  PanelBody,
+  IconButton
 } = wp.components;
 registerBlockType('talia/custom-cta', {
   //built-in attributes
@@ -126,6 +128,10 @@ registerBlockType('talia/custom-cta', {
       type: 'string',
       source: 'html',
       selector: 'p'
+    },
+    background: {
+      type: 'string',
+      default: 'null'
     }
   },
 
@@ -139,7 +145,8 @@ registerBlockType('talia/custom-cta', {
       title,
       body,
       titleColor,
-      bodyColor
+      bodyColor,
+      background
     } = attributes; //custom functions
 
     function onChangeTitle(newTitle) {
@@ -166,22 +173,48 @@ registerBlockType('talia/custom-cta', {
       });
     }
 
+    function onSelectImage(newImage) {
+      setAttributes({
+        background: newImage.sizes.full.url
+      });
+    }
+
     return [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InspectorControls, {
       style: {
         marginBottom: '40px'
       }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
-      title: 'Title Color'
+      title: 'Font Colors'
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select Title Color")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ColorPalette, {
       value: titleColor,
       onChange: onTitleColorChange
-    })), ",", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
-      title: 'Body Color'
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select Body Color")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ColorPalette, {
+    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select Body Color")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ColorPalette, {
       value: bodyColor,
       onChange: onBodyColorChange
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
+      title: 'Background Image'
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select Background Image:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(MediaUpload, {
+      onSelect: onSelectImage,
+      type: "image",
+      value: background,
+      render: _ref2 => {
+        let {
+          open
+        } = _ref2;
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(IconButton, {
+          onClick: open,
+          icon: "upload",
+          className: "editor-media-placeholder__button is-button is-default is-large"
+        }, "Upload Background Image");
+      }
     }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      class: "cta-container"
+      class: "cta-container",
+      style: {
+        backgroundImage: `url('${background}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText, {
       key: "editable",
       tagName: "h2",
@@ -203,18 +236,25 @@ registerBlockType('talia/custom-cta', {
     }))];
   },
 
-  save(_ref2) {
+  save(_ref3) {
     let {
       attributes
-    } = _ref2;
+    } = _ref3;
     const {
       title,
       body,
       titleColor,
-      bodyColor
+      bodyColor,
+      background
     } = attributes;
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      class: "cta-container"
+      class: "cta-container",
+      style: {
+        backgroundImage: `url('${background}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
       style: {
         color: titleColor
