@@ -6428,6 +6428,15 @@ body.page .main-navigation {
   color: #FFF;
 }
 
+.cta-container {
+  position: relative;
+}
+
+.cta-container .cta-overlay {
+  position: absolute;
+  inset: 0px;
+}
+
 /* Media */
 .page-content .wp-smiley,
 .entry-content .wp-smiley,
