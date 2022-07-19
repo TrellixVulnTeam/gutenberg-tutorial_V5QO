@@ -49,8 +49,14 @@
  {
     wp_register_script('custom-cta-js', get_template_directory_uri() . '/build/index.js', array('wp-blocks', 'wp-editor', 'wp-components'));
     
+    wp_register_style( 'custom-cta-css', get_template_directory_uri() . '/gutenberg.css', array());
+
+    wp_register_style( 'custom-backend-cta-css', get_template_directory_uri() . '/backend.css', array());
+
     register_block_type('talia/custom-cta', array(
-        'editor_script' => 'custom-cta-js'
+        'editor_script' => 'custom-cta-js',
+        'editor_style' => 'custom-backend-cta-css',
+        'style' => 'custom-cta-css'
     ));
  }
 

@@ -56,7 +56,7 @@ registerBlockType('talia/custom-cta', {
 
 
     //built-in functions
-    edit({ attributes, setAttributes }) {
+    edit: ({ attributes, setAttributes }) => {
 
         const {
             title,
@@ -136,13 +136,13 @@ registerBlockType('talia/custom-cta', {
                     />
                 </PanelBody>
             </InspectorControls>,
-            <div class="cta-container" style={{
+            <div className="cta-container" style={{
                 backgroundImage: `url('${background}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
             }}>
-                <div class="cta-overlay" style={{
+                <div className="cta-overlay" style={{
                     background: overlayColor, opacity: overlayOpacity
                 }}></div>
                     <RichText key="editable"
@@ -162,7 +162,7 @@ registerBlockType('talia/custom-cta', {
         ]);
     },
 
-    save({ attributes }) {
+    save: ({ attributes }) => {
         const {
             title,
             body,
@@ -174,13 +174,13 @@ registerBlockType('talia/custom-cta', {
         } = attributes;
 
         return (
-            <div class="cta-container" style={{
+            <div className="cta-container" style={{
                 backgroundImage: `url('${background}')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
             }}>
-                <div class="cta-overlay" style={{
+                <div className="cta-overlay" style={{
                     background: overlayColor, opacity: overlayOpacity
                 }}></div>
                     <h2 style={{ color: titleColor }}>{title}</h2>
