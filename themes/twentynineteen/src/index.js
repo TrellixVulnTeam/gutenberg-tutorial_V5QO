@@ -110,7 +110,9 @@ registerBlockType('talia/custom-cta', {
         }
 
         function onChangeAlignment(newAlignment) {
-            setAttributes({ alignment: newAlignment });
+            setAttributes({ 
+                alignment: newAlignment === undefined ? 'none' : newAlignment
+            });
         }
 
         return ([
@@ -154,7 +156,7 @@ registerBlockType('talia/custom-cta', {
             </InspectorControls>,
             <div className="cta-container" style={{
                 backgroundImage: `url('${background}')`,
-                backgroundSize: 'cover',
+                backgroundSize: 'auto',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
             }}>
@@ -201,7 +203,7 @@ registerBlockType('talia/custom-cta', {
         return (
             <div className="cta-container" style={{
                 backgroundImage: `url('${background}')`,
-                backgroundSize: 'cover',
+                backgroundSize: 'auto',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
             }}>
